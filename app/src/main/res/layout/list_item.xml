@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/magnitude"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:text="1.1"
         />
@@ -19,7 +19,7 @@
     <TextView
         android:id="@+id/city_name"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:text="Amsterdam"
         />
@@ -27,7 +27,7 @@
     <TextView
         android:id="@+id/quake_date"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:text="Mar 6,2010"
         />
