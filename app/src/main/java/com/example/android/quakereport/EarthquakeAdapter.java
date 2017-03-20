@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Marcin on 2017-02-27.
@@ -84,7 +84,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         return ContextCompat.getColor(getContext(), magnitudeColorResourceId);
     }
 
-    public EarthquakeAdapter(Activity context, ArrayList<Earthquake> listEarthquakes) {
+    public EarthquakeAdapter(Activity context, List<Earthquake> listEarthquakes) {
         // Here, we initialize the ArrayAdapter's internal storage for the context and the list.
         // the second argument is used when the ArrayAdapter is populating a single TextView.
         // Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
