@@ -20,7 +20,6 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -28,9 +27,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class EarthquakeActivity extends AppCompatActivity implements LoaderCallbacks<List<Earthquake>> {
+public class EarthquakeActivity extends AppCompatActivity implements LoaderCallbacks<ArrayList<Earthquake>> {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
@@ -48,15 +47,15 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
             "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
 
     @Override
-    public Loader<List<Earthquake>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<ArrayList<Earthquake>> onCreateLoader(int i, Bundle bundle) {
         // TODO: Create a new loader for the given URL
         return new QuakeLoader(this, USGS_REQUEST_URL);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+    public void onLoadFinished(Loader<ArrayList<Earthquake>> loader, ArrayList<Earthquake> earthquakes) {
         // TODO: Update the UI with the result
-        mAdapter.clear();
+        //mAdapter.clear();
 
         // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
@@ -66,7 +65,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Earthquake>> loader) {
+    public void onLoaderReset(Loader<ArrayList<Earthquake>> loader) {
         // TODO: Loader reset, so we can clear out our existing data.
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
@@ -92,17 +91,17 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
      */
 
 
-    private void updateUi(final List<Earthquake> earthquakes) {
+    private void updateUi(final ArrayList<Earthquake> earthquakes) {
 
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
         // Create a new {@link ArrayAdapter} of earthquakes
-        EarthquakeAdapter adapter = new EarthquakeAdapter(this, earthquakes);
+        EarthquakeAdapter mAdapter = new EarthquakeAdapter(this, earthquakes);
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        earthquakeListView.setAdapter(adapter);
+        earthquakeListView.setAdapter(mAdapter);
         /**
          * {@link AsyncTask} to perform the network request on a background thread, and then
          * * update the UI with the first earthquake in the response.
