@@ -39,6 +39,7 @@ public final class QueryUtils {
      * Query the USGS dataset and return an {@link ArrayList<Earthquake>} object to represent a single earthquake.
      */
     public static ArrayList<Earthquake> fetchEarthquakeData(String requestUrl) {
+        Log.i(LOG_TAG,"fetchEarthquakeData");
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -49,12 +50,13 @@ public final class QueryUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
-
         // Extract relevant fields from the JSON response and create an {@link Event} object
         ArrayList<Earthquake> earthquake = extractEarthquakes(jsonResponse);
 
         // Return the {@link Event}
         return earthquake;
+
+
     }
 
     /**
