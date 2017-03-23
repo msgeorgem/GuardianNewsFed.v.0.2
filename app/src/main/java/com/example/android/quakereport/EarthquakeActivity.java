@@ -82,9 +82,6 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         earthquakeListView.setEmptyView(mEmptyStateTextView);
 
-        mNoInternetTextView = (TextView) findViewById(R.id.no_internet);
-        earthquakeListView.setEmptyView(mNoInternetTextView);
-
 
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,8 +113,12 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
             // because this activity implements the LoaderCallbacks interface).
             loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this).forceLoad();
         } else {
+            // Otherwise, display error
+            // First, hide loading indicator so error message will be visible
+            View loadingIndicator = findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(View.GONE);
             // Set empty state text to display "No internet connection"
-            mNoInternetTextView.setText(R.string.no_internet);
+            mEmptyStateTextView.setText(R.string.no_internet);
         }
 
 
@@ -137,6 +138,8 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
         Log.i(LOG_TAG, "onLoadFinished");
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
+        // Set empty state text to display "No internet connection"
+        mEmptyStateTextView.setText(R.string.no_earthquakes);
 
         mAdapter.clear();
 
