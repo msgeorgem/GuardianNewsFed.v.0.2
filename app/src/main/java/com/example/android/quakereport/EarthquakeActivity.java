@@ -17,8 +17,11 @@ package com.example.android.quakereport;
 
 import android.app.LoaderManager;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -44,57 +47,26 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
      * Adapter for the list of earthquakes
      */
     private EarthquakeAdapter mAdapter;
-    /** TextView that is displayed when the list is empty */
+    /**
+     * TextView that is displayed when the list is empty
+     */
     private TextView mEmptyStateTextView;
+
+    /**
+     * TextView that is displayed when there in no internet connection
+     */
+    private TextView mNoInternetTextView;
+
 
     private static final String USGS_REQUEST_URL =
             "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
 
-    @Override
-    public Loader<ArrayList<Earthquake>> onCreateLoader(int i, Bundle bundle) {
-        // TODO: Create a new loader for the given URL
-        Log.i(LOG_TAG, "onCreateLoader");
-        return new QuakeLoader(this, USGS_REQUEST_URL);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<ArrayList<Earthquake>> loader, ArrayList<Earthquake> earthquakes) {
-        // TODO: Update the UI with the result
-        // Hide loading indicator because the data has been loaded
-        View loadingIndicator = findViewById(R.id.loading_indicator);
-        loadingIndicator.setVisibility(View.GONE);
-        // Set empty state text to display "No earthquakes found."
-        mEmptyStateTextView.setText(R.string.no_earthquakes);
-        Log.i(LOG_TAG, "onLoadFinished");
-        mAdapter.clear();
-
-        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
-        // data set. This will trigger the ListView to update.
-        if (earthquakes != null && !earthquakes.isEmpty()) {
-           mAdapter.addAll(earthquakes);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<ArrayList<Earthquake>> loader) {
-        // TODO: Loader reset, so we can clear out our existing data.
-        // Loader reset, so we can clear out our existing data.
-        Log.i(LOG_TAG, "onLoaderReset");
-        mAdapter.clear();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
-        // Get a reference to the LoaderManager, in order to interact with loaders.
-        LoaderManager loaderManager = getLoaderManager();
-
-        // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-        // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-        // because this activity implements the LoaderCallbacks interface).
-        loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this).forceLoad();
         Log.i(LOG_TAG, "initLoader");
 
         // Find a reference to the {@link ListView} in the layout
@@ -109,6 +81,9 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         earthquakeListView.setEmptyView(mEmptyStateTextView);
+
+        mNoInternetTextView = (TextView) findViewById(R.id.no_internet);
+        earthquakeListView.setEmptyView(mNoInternetTextView);
 
 
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,6 +100,59 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
 
             }
         });
+        // Get a reference to the ConnectivityManager to check state of network connectivity
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Get details on the currently active default data network
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+
+            // Get a reference to the LoaderManager, in order to interact with loaders.
+            LoaderManager loaderManager = getLoaderManager();
+            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+            // because this activity implements the LoaderCallbacks interface).
+            loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this).forceLoad();
+        } else {
+            // Set empty state text to display "No internet connection"
+            mNoInternetTextView.setText(R.string.no_internet);
+        }
+
+
+    }
+
+    @Override
+    public Loader<ArrayList<Earthquake>> onCreateLoader(int i, Bundle bundle) {
+        // TODO: Create a new loader for the given URL
+        Log.i(LOG_TAG, "onCreateLoader");
+        return new QuakeLoader(this, USGS_REQUEST_URL);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Earthquake>> loader, ArrayList<Earthquake> earthquakes) {
+        // TODO: Update the UI with the result
+        // Hide loading indicator because the data has been loaded
+        Log.i(LOG_TAG, "onLoadFinished");
+        View loadingIndicator = findViewById(R.id.loading_indicator);
+        loadingIndicator.setVisibility(View.GONE);
+
+        mAdapter.clear();
+
+        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
+        // data set. This will trigger the ListView to update.
+        if (earthquakes != null && !earthquakes.isEmpty()) {
+            mAdapter.addAll(earthquakes);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Earthquake>> loader) {
+        // TODO: Loader reset, so we can clear out our existing data.
+        // Loader reset, so we can clear out our existing data.
+        Log.i(LOG_TAG, "onLoaderReset");
+        mAdapter.clear();
     }
 }
 
