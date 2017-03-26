@@ -1,4 +1,4 @@
-package com.example.android.quakereport;
+package com.example.android.newsfeed;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
@@ -11,21 +11,21 @@ import java.util.ArrayList;
  * Loads a list of earthquakes by using an AsyncTask to perform the
  * network request to the given URL.
  */
-public class QuakeLoader extends AsyncTaskLoader<ArrayList<Earthquake>> {
+public class NewsLoader extends AsyncTaskLoader<ArrayList<SingleNews>> {
 
     /** Tag for log messages */
-    private static final String LOG_TAG = QuakeLoader.class.getName();
+    private static final String LOG_TAG = NewsLoader.class.getName();
 
     /** Query URL */
     private String mUrl;
 
     /**
-     * Constructs a new {@link QuakeLoader}.
+     * Constructs a new {@link NewsLoader}.
      *
      * @param context of the activity
      * @param url to load data from
      */
-    public QuakeLoader(Context context, String url) {
+    public NewsLoader(Context context, String url) {
         super(context);
         mUrl = url;
     }
@@ -40,13 +40,13 @@ public class QuakeLoader extends AsyncTaskLoader<ArrayList<Earthquake>> {
      * This is on a background thread.
      */
     @Override
-    public ArrayList<Earthquake> loadInBackground() {
+    public ArrayList<SingleNews> loadInBackground() {
         if (mUrl == null) {
             return null;
         }
         Log.i(LOG_TAG,"loadInBackground");
         // Perform the network request, parse the response, and extract a list of earthquakes.
-        ArrayList<Earthquake> earthquakes = QueryUtils.fetchEarthquakeData(mUrl);
-        return earthquakes;
+        ArrayList<SingleNews> singleNews = QueryUtils.fetchNewsData(mUrl);
+        return singleNews;
     }
 }

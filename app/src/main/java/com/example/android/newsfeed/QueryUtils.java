@@ -1,4 +1,4 @@
-package com.example.android.quakereport;
+package com.example.android.newsfeed;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -35,14 +35,14 @@ public final class QueryUtils {
     private QueryUtils() {
     }
 
-    /**
-     * Query the USGS dataset and return an {@link ArrayList<Earthquake>} object to represent a single earthquake.
+     /**
+     * Query the USGS dataset and return an {@link ArrayList<SingleNews>} object to represent a single earthquake.
      */
-    public static ArrayList<Earthquake> fetchEarthquakeData(String requestUrl) {
-        Log.i(LOG_TAG,"fetchEarthquakeData");
+    public static ArrayList<SingleNews> fetchNewsData(String requestUrl) {
+        Log.i(LOG_TAG,"fetchSingleNewsData");
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -57,10 +57,10 @@ public final class QueryUtils {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
         // Extract relevant fields from the JSON response and create an {@link Event} object
-        ArrayList<Earthquake> earthquake = extractEarthquakes(jsonResponse);
+        ArrayList<SingleNews> singleNews = extractNews(jsonResponse);
 
         // Return the {@link Event}
-        return earthquake;
+        return singleNews;
 
 
     }
@@ -137,40 +137,40 @@ public final class QueryUtils {
     }
 
     /**
-     * Return a list of {@link Earthquake} objects that has been built up from
+     * Return a list of {@link SingleNews} objects that has been built up from
      * parsing a JSON response.
      */
-    public static ArrayList<Earthquake> extractEarthquakes(String earthquakeJSON) {
+    public static ArrayList<SingleNews> extractNews(String singleNewsJSON) {
         // If the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty(earthquakeJSON)) {
+        if (TextUtils.isEmpty(singleNewsJSON)) {
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding earthquakes to
-        ArrayList<Earthquake> earthquakes = new ArrayList<>();
+        // Create an empty ArrayList that we can start adding singleNews to
+        ArrayList<SingleNews> singleNews = new ArrayList<>();
 
         // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
-            JSONObject root = new JSONObject(earthquakeJSON);
-            JSONArray features = root.getJSONArray("features");
-            //Date dateObject;
-            //SimpleDateFormat dateFormat = new SimpleDateFormat("MMM DD,yyyy\nh:mm a", Locale.ENGLISH);
+            JSONObject root = new JSONObject(singleNewsJSON);
+            JSONObject response = root.getJSONObject("response");
+            JSONArray results = response.getJSONArray("results");
 
-            // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
-            // build up a list of Earthquake objects with the corresponding data.
 
-            for (int i = 0; i < features.length(); i++) {
-                JSONObject earthquake = features.getJSONObject(i);
-                JSONObject properties = earthquake.getJSONObject("properties");
-                double mag = properties.getDouble("mag");
-                String place = properties.getString("place");
-                long time = properties.getLong("time");
-                String url = properties.getString("url");
-            //  dateObject = new Date(time);
-            //  String dateToDisplay = dateFormat.format(dateObject);
-                earthquakes.add(new Earthquake(mag, place, time, url));
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject singlenews = results.getJSONObject(i);
+                String sectionname = singlenews.getString("sectionName");
+
+                JSONObject fields = singlenews.getJSONObject("fields");
+                String title = fields.getString("headline");
+                String shorttext = fields.getString("trailText");
+                String datetime = fields.getString("lastModified");
+                String url = fields.getString("shortUrl");
+
+
+
+                singleNews.add(new SingleNews(title, shorttext, datetime, sectionname, url));
             }
 
         } catch (JSONException e) {
@@ -181,7 +181,7 @@ public final class QueryUtils {
         }
 
         // Return the list of earthquakes
-        return earthquakes;
+        return singleNews;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.android.quakereport;
+package com.example.android.newsfeed;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,8 +27,8 @@ public class SettingsActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings_main);
 
-            Preference minMagnitude = findPreference(getString(R.string.settings_min_magnitude_key));
-            bindPreferenceSummaryToValue(minMagnitude);
+            Preference query = findPreference(getString(R.string.settings_query_key));
+            bindPreferenceSummaryToValue(query);
 
             Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
             bindPreferenceSummaryToValue(orderBy);
