@@ -22,7 +22,7 @@
     <!-- Settings Menu Item [CHAR LIMIT=NONE] -->
     <string name="settings_menu_item">Settings</string>
     <!-- Settings Activity Title [CHAR LIMIT=NONE] -->
-    <string name="settings_title">Earthquake Settings</string>
+    <string name="settings_title">News Feeder Settings</string>
     <!-- Strings For Minimum Magnitude Preference [CHAR LIMIT=30] -->
     <string name="settings_query_label">Ask anything</string>
     <string name="settings_query_key" translatable="false">query</string>
@@ -44,4 +44,23 @@
     <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
     <string name="settings_order_by_tag_business_label">Business</string>
     <string name="settings_order_by_tag_business_value" translatable="false">business/business</string>
+
+    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_tag_film_label">Movies</string>
+    <string name="settings_order_by_tag_film_value" translatable="false">film/film</string>
+
+    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_tag_music_label">Music</string>
+    <string name="settings_order_by_tag_music_value" translatable="false">music/music</string>
+
+    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_tag_sport_label">Sport</string>
+    <string name="settings_order_by_tag_sport_value" translatable="false">sport/sport</string>
+
+    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_tag_travel_label">Travel</string>
+    <string name="settings_order_by_tag_travel_value" translatable="false">travel/travel</string>
+
+
+
 </resources>
