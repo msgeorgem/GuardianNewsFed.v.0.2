@@ -157,8 +157,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<SingleNews>> loader, ArrayList<SingleNews> earthquakes) {
-        // TODO: Update the UI with the result
+    public void onLoadFinished(Loader<ArrayList<SingleNews>> loader, ArrayList<SingleNews> news) {
         // Hide loading indicator because the data has been loaded
         Log.i(LOG_TAG, "onLoadFinished");
         View loadingIndicator = findViewById(R.id.loading_indicator);
@@ -168,10 +167,10 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
 
         mAdapter.clear();
 
-        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
+        // If there is a valid list of {@link News}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
-        if (earthquakes != null && !earthquakes.isEmpty()) {
-            mAdapter.addAll(earthquakes);
+        if (news != null && !news.isEmpty()) {
+            mAdapter.addAll(news);
         }
     }
 
