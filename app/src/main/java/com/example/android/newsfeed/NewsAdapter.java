@@ -16,14 +16,7 @@ import static com.example.android.newsfeed.R.id.date;
  */
 
 public class NewsAdapter extends ArrayAdapter<SingleNews> {
-
-    /**
-     * Return the formatted date string (i.e. "2017-03-27") from a Date object.
-     */
-//    private String formatDate(Date dateObject) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-//        return dateFormat.format(dateObject);
-//    }
+    
 
     public NewsAdapter(Activity context, List<SingleNews> listNews) {
         // Here, we initialize the ArrayAdapter's internal storage for the context and the list.
@@ -70,15 +63,11 @@ public class NewsAdapter extends ArrayAdapter<SingleNews> {
         shortTextView.setText(currentNews.getShorttext());
 
 
-//        Date dateObject = new Date(currentNews.getDateTime());
-
         // Find the TextView with view ID date
         TextView dateView = (TextView) listItemView.findViewById(date);
         // Format the date string (i.e. "2017-03-27")
-//      String formattedDate = formatDate(dateObject);
         String formattedDate = (currentNews.getDateTime()).substring(0,10);
         // Display the date of the current news in that TextView
-//        dateView.setText(currentNews.getDateTime());
         dateView.setText(formattedDate);
 
 

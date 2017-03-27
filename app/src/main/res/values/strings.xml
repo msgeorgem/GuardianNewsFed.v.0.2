@@ -37,27 +37,27 @@
     <!--<string name="settings_order_by_tag_all_label">All kinds of news</string>-->
     <!--<string name="settings_order_by_tsg_all_value" translatable="false"></string>-->
 
-    <!-- Label for order-by magnitude option [CHAR LIMIT=20] -->
+    <!-- Label for order-by politics[CHAR LIMIT=20] -->
     <string name="settings_order_by_tag_politics_label">Politics</string>
     <string name="settings_order_by_tag_politics_value" translatable="false">politics/politics</string>
 
-    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <!-- Label for order-by business [CHAR LIMIT=20] -->
     <string name="settings_order_by_tag_business_label">Business</string>
     <string name="settings_order_by_tag_business_value" translatable="false">business/business</string>
 
-    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <!-- Label for order-by film [CHAR LIMIT=20] -->
     <string name="settings_order_by_tag_film_label">Movies</string>
     <string name="settings_order_by_tag_film_value" translatable="false">film/film</string>
 
-    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <!-- Label for order-by music [CHAR LIMIT=20] -->
     <string name="settings_order_by_tag_music_label">Music</string>
     <string name="settings_order_by_tag_music_value" translatable="false">music/music</string>
 
-    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <!-- Label for order-by sport [CHAR LIMIT=20] -->
     <string name="settings_order_by_tag_sport_label">Sport</string>
     <string name="settings_order_by_tag_sport_value" translatable="false">sport/sport</string>
 
-    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <!-- Label for order-by travel [CHAR LIMIT=20] -->
     <string name="settings_order_by_tag_travel_label">Travel</string>
     <string name="settings_order_by_tag_travel_value" translatable="false">travel/travel</string>
 

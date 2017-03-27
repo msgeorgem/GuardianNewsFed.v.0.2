@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 /**
- * Helper methods related to requesting and receiving earthquake data from USGS.
+ * Helper methods related to requesting and receiving news data from Guardian website.
  */
 public final class QueryUtils {
 
@@ -36,7 +36,7 @@ public final class QueryUtils {
     }
 
      /**
-     * Query the USGS dataset and return an {@link ArrayList<SingleNews>} object to represent a single earthquake.
+     * Query the USGS dataset and return an {@link ArrayList<SingleNews>} object to represent a single news.
      */
     public static ArrayList<SingleNews> fetchNewsData(String requestUrl) {
         Log.i(LOG_TAG,"fetchSingleNewsData");
@@ -106,7 +106,7 @@ public final class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving the news JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -161,12 +161,12 @@ public final class QueryUtils {
             for (int i = 0; i < results.length(); i++) {
                 JSONObject singlenews = results.getJSONObject(i);
                 String sectionname = singlenews.getString("sectionName");
+                String url = singlenews.getString("webUrl");
 
                 JSONObject fields = singlenews.getJSONObject("fields");
                 String title = fields.getString("headline");
                 String shorttext = fields.getString("trailText");
                 String datetime = fields.getString("lastModified");
-                String url = fields.getString("shortUrl");
 
 
 
@@ -180,7 +180,7 @@ public final class QueryUtils {
             Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
         }
 
-        // Return the list of earthquakes
+        // Return the list of news
         return singleNews;
     }
 

@@ -15,19 +15,20 @@
 -->
 <resources>
     <!-- Primary color of the app (shown in the app bar) -->
-    <color name="colorPrimary">#2B3D4D</color>
+    <color name="colorPrimary">#3F51B5</color>
 
     <!-- Primary dark color of the app (shown in the status bar) -->
-    <color name="colorPrimaryDark">#23303D</color>
+    <color name="colorPrimaryDark">#1A237E</color>
 
     <!-- Accent color of the app -->
-    <color name="colorAccent">#00e5e4</color>
+    <color name="colorAccent">#FF1744</color>
 
     <!-- Text color for the headline -->
-    <color name="textColorHeadline">#006aff</color>
+    <color name="textColorHeadline">#3F51B5</color>
 
     <!-- Text color for the trailtext -->
     <color name="textColortrailText">#000000</color>
+
 
 
 </resources>

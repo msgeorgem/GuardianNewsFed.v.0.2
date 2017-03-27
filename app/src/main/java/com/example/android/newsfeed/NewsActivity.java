@@ -42,13 +42,13 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
     public static final String LOG_TAG = NewsActivity.class.getName();
 
     /**
-     * Constant value for the earthquake loader ID. We can choose any integer.
+     * Constant value for the news loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
      */
-    private static final int EARTHQUAKE_LOADER_ID = 1;
+    private static final int NEWS_LOADER_ID = 1;
 
     /**
-     * Adapter for the list of earthquakes
+     * Adapter for the list of news
      */
     private NewsAdapter mAdapter;
     /**
@@ -57,7 +57,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
     private TextView mEmptyStateTextView;
 
 
-    private static final String USGS_REQUEST_URL =
+    private static final String GUARDIAN_REQUEST_URL =
 
             "https://content.guardianapis.com/search?" +
                     "&show-fields=headline,thumbnail,trailText,short-url,lastModified" +
@@ -91,7 +91,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
                 SingleNews singleNews = mAdapter.getItem(position);
                 //Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri newsUri = Uri.parse(singleNews.getUrl());
-                //Create a new intent to view the earthquake URI
+                //Create a new intent to view the news URI
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, newsUri);
                 //Send the intent to launch a new activity
                 startActivity(browserIntent);
@@ -112,7 +112,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
             // Initialize the loader. Pass in the int ID constant defined above and pass in null for
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
             // because this activity implements the LoaderCallbacks interface).
-            loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this).forceLoad();
+            loaderManager.initLoader(NEWS_LOADER_ID, null, this).forceLoad();
         } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
@@ -128,7 +128,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
     @Override
     public Loader<ArrayList<SingleNews>> onCreateLoader(int i, Bundle bundle) {
 
-        // TODO: Create a new loader for the given URL
         Log.i(LOG_TAG, "onCreateLoader");
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         String query = sharedPrefs.getString(
@@ -140,13 +139,9 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
                 getString(R.string.settings_order_by_key),
                 getString(R.string.settings_order_by_default)
                  );
-//        tag business/business
-//        tag politics/politics
-//        tag commentisfree/opinion
-//        tag news/news
 
 
-        Uri baseUri = Uri.parse(USGS_REQUEST_URL);
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
         uriBuilder.appendQueryParameter("api-key", "6a61772d-2298-4946-8002-86aee6d4caca");
@@ -156,8 +151,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
         uriBuilder.appendQueryParameter("q", query);
         uriBuilder.appendQueryParameter("tag", tag);
         uriBuilder.appendQueryParameter("order-by", "newest");
-
-//        uriBuilder.appendQueryParameter("minmag", minMagnitude);
 
 
         return new NewsLoader(this, uriBuilder.toString());
@@ -184,7 +177,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
 
     @Override
     public void onLoaderReset(Loader<ArrayList<SingleNews>> loader) {
-        // TODO: Loader reset, so we can clear out our existing data.
         // Loader reset, so we can clear out our existing data.
         Log.i(LOG_TAG, "onLoaderReset");
         mAdapter.clear();
