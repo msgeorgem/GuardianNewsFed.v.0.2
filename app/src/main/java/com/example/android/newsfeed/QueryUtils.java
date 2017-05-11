@@ -168,8 +168,6 @@ public final class QueryUtils {
                 String shorttext = fields.getString("trailText");
                 String datetime = fields.getString("lastModified");
 
-
-
                 singleNews.add(new SingleNews(title, shorttext, datetime, sectionname, url));
             }
 

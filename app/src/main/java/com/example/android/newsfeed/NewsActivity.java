@@ -46,7 +46,11 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int NEWS_LOADER_ID = 1;
+    private static final String GUARDIAN_REQUEST_URL =
 
+            "https://content.guardianapis.com/search?" +
+                    "&show-fields=headline,thumbnail,trailText,short-url,lastModified" +
+                    "&show-tags=type";
     /**
      * Adapter for the list of news
      */
@@ -55,13 +59,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
      * TextView that is displayed when the list is empty
      */
     private TextView mEmptyStateTextView;
-
-
-    private static final String GUARDIAN_REQUEST_URL =
-
-            "https://content.guardianapis.com/search?" +
-                    "&show-fields=headline,thumbnail,trailText,short-url,lastModified" +
-                    "&show-tags=type";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +143,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
 
         uriBuilder.appendQueryParameter("api-key", "6a61772d-2298-4946-8002-86aee6d4caca");
         uriBuilder.appendQueryParameter("format", "json");
-        uriBuilder.appendQueryParameter("pageSize", "10");
+        uriBuilder.appendQueryParameter("pageSize", "20");
         uriBuilder.appendQueryParameter("from-date", "2015-01-01");
         uriBuilder.appendQueryParameter("q", query);
         uriBuilder.appendQueryParameter("tag", tag);
