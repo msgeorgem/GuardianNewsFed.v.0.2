@@ -80,7 +80,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         earthquakeListView.setEmptyView(mEmptyStateTextView);
 
-
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -92,7 +91,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, newsUri);
                 //Send the intent to launch a new activity
                 startActivity(browserIntent);
-
             }
         });
         // Get a reference to the ConnectivityManager to check state of network connectivity
@@ -137,7 +135,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
                 getString(R.string.settings_order_by_default)
                  );
 
-
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
@@ -148,7 +145,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
         uriBuilder.appendQueryParameter("q", query);
         uriBuilder.appendQueryParameter("tag", tag);
         uriBuilder.appendQueryParameter("order-by", "newest");
-
 
         return new NewsLoader(this, uriBuilder.toString());
     }

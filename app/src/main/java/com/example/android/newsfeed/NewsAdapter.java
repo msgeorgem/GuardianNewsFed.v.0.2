@@ -47,21 +47,17 @@ public class NewsAdapter extends ArrayAdapter<SingleNews> {
 
         // Get the {@link Word} object located at this position in the list
         SingleNews currentNews = getItem(position);
-
-
         // Find the TextView in the list_item.xml layout with the ID version_name
         TextView titleTextView = (TextView) listItemView.findViewById(R.id.headline);
         // Get the version name from the current Word object and
         // set this text on the name TextView
         titleTextView.setText(currentNews.getTitle());
 
-
         // Find the TextView in the list_item.xml layout with the ID version_number
         TextView shortTextView = (TextView) listItemView.findViewById(R.id.shorttext);
         // Get the version number from the current Word object and
         // set this text on the number TextView
         shortTextView.setText(currentNews.getShorttext());
-
 
         // Find the TextView with view ID date
         TextView dateView = (TextView) listItemView.findViewById(date);
@@ -70,13 +66,11 @@ public class NewsAdapter extends ArrayAdapter<SingleNews> {
         // Display the date of the current news in that TextView
         dateView.setText(formattedDate);
 
-
         // Find the TextView in the list_item.xml layout with the ID version_number
         TextView typeTextView = (TextView) listItemView.findViewById(R.id.SectionName);
         // Get the version number from the current Word object and
         // set this text on the number TextView
         typeTextView.setText(currentNews.getSectionName());
-
 
         // Return the whole list item layout (containing 3 TextViews)
         // so that it can be shown in the ListView
