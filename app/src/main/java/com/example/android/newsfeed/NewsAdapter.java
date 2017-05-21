@@ -18,7 +18,7 @@ import static com.example.android.newsfeed.R.id.date;
  */
 
 public class NewsAdapter extends ArrayAdapter<SingleNews> {
-    
+
 
     public NewsAdapter(Activity context, List<SingleNews> listNews) {
         // Here, we initialize the ArrayAdapter's internal storage for the context and the list.
@@ -56,15 +56,12 @@ public class NewsAdapter extends ArrayAdapter<SingleNews> {
         SingleNews currentNews = getItem(position);
 
         viewHolder.imageURL = currentNews.getThumbnail();
-
         new DownloadAsyncTask().execute(viewHolder);
 
         viewHolder.titleTextView.setText(currentNews.getTitle());
         viewHolder.shortTextView.setText(currentNews.getShorttext());
 
-        // Find the TextView with view ID date
-        String formattedDate = (currentNews.getDateTime()).substring(0,10);
-        // Display the date of the current news in that TextView
+        String formattedDate = (currentNews.getDateTime()).substring(0, 10);
         viewHolder.dateView.setText(formattedDate);
         viewHolder.typeTextView.setText(currentNews.getSectionName());
 

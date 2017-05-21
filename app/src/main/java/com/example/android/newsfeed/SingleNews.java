@@ -13,12 +13,14 @@ public class SingleNews {
     private String mSectionName;
     private String mUrl;
 
-
     /**
      * Create a new SingleNews object.
      * @param title     is the title ot the news
-     * @param shorttext it the shorttext of the news
+     * @param shorttext is the shorttext of the news
+     * @param dateTime  is the publish date of the news
+     * @param sectionname  is the sectionname of the news
      * @param url       is the url of the website about specific news
+     * @param thumbnail is the url of the thumbnail about specific news
      */
 
     public SingleNews(String title, String shorttext, String dateTime, String sectionname,
@@ -30,20 +32,20 @@ public class SingleNews {
         mSectionName = sectionname;
         mUrl = url;
     }
-
     /**
      * Get the thumbnail of the article.
      */
-//    public String getThumbnail() {
-//        return mThumbnail;
-//    }
+    public String getThumbnail() {
+        return mThumbnail;
+    }
     /**
      * Get the title of the article.
      */
     public String getTitle() {
         return mTitle;
     }
-        /**
+
+    /**
      * Get the shorttext of the article.
      */
     public String getShorttext() {
@@ -63,7 +65,6 @@ public class SingleNews {
     public String getSectionName(){
         return mSectionName;
     }
-
     /**
      * Get the url of the article.
      */
@@ -71,8 +72,4 @@ public class SingleNews {
         return mUrl;
     }
 
-
-    public String getThumbnail() {
-        return mThumbnail;
-    }
 }
