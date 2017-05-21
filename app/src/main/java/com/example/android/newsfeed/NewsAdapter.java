@@ -59,31 +59,15 @@ public class NewsAdapter extends ArrayAdapter<SingleNews> {
 
         new DownloadAsyncTask().execute(viewHolder);
 
-        // Find the TextView in the list_item.xml layout with the ID version_name
-        // Get the version name from the current News object and
-        // set this text on the name TextView
         viewHolder.titleTextView.setText(currentNews.getTitle());
-
-        // Find the TextView in the list_item.xml layout with the ID version_number
-        // Get the version number from the current News object and
-        // set this text on the number TextView
         viewHolder.shortTextView.setText(currentNews.getShorttext());
 
         // Find the TextView with view ID date
-//        TextView dateView = (TextView) listItemView.findViewById(date);
-        // Format the date string (i.e. "2017-03-27")
         String formattedDate = (currentNews.getDateTime()).substring(0,10);
         // Display the date of the current news in that TextView
         viewHolder.dateView.setText(formattedDate);
-
-        // Find the TextView in the list_item.xml layout with the ID version_number
-//        TextView typeTextView = (TextView) listItemView.findViewById(R.id.SectionName);
-        // Get the version number from the current News object and
-        // set this text on the number TextView
         viewHolder.typeTextView.setText(currentNews.getSectionName());
 
-        // Return the whole list item layout (containing 3 TextViews)
-        // so that it can be shown in the ListView
         return convertView;
     }
 
