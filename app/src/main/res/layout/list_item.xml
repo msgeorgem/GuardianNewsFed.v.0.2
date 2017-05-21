@@ -65,12 +65,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:textColor="@color/textColortrailText"
-            android:textSize="10sp"
+            android:textSize="12sp"
             tools:text="2017-03-27" />
 
         <TextView
             android:id="@+id/SectionName"
-            android:layout_width="50dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:maxLines="2"

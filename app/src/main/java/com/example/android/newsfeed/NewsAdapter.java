@@ -47,7 +47,6 @@ public class NewsAdapter extends ArrayAdapter<SingleNews> {
                     R.layout.list_item, parent, false);
 
             viewHolder = new ViewHolder(convertView);
-            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.thumbnail);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

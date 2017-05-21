@@ -14,7 +14,7 @@ import java.net.URL;
 
 public class DownloadAsyncTask extends AsyncTask<NewsAdapter.ViewHolder, Void, NewsAdapter.ViewHolder> {
 
-    public Bitmap bitmap;
+    private Bitmap bitmap;
 
     @Override
     protected NewsAdapter.ViewHolder doInBackground(NewsAdapter.ViewHolder... params) {
