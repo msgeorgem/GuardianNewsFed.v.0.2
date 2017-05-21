@@ -51,6 +51,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
             "https://content.guardianapis.com/search?" +
                     "&show-fields=headline,thumbnail,trailText,short-url,lastModified" +
                     "&show-tags=type";
+    public ListView newsListView;
     /**
      * Adapter for the list of news
      */
@@ -68,19 +69,19 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
         Log.i(LOG_TAG, "initLoader");
 
         // Find a reference to the {@link ListView} in the layout
-        ListView earthquakeListView = (ListView) findViewById(R.id.list);
+        newsListView = (ListView) findViewById(R.id.list);
 
         // Create a new adapter that takes an empty list of earthquakes as input
         mAdapter = new NewsAdapter(this, new ArrayList<SingleNews>());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        earthquakeListView.setAdapter(mAdapter);
+        newsListView.setAdapter(mAdapter);
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
-        earthquakeListView.setEmptyView(mEmptyStateTextView);
+        newsListView.setEmptyView(mEmptyStateTextView);
 
-        earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Get the {@link Earthquake} object at the given position the user clicked on
@@ -128,12 +129,12 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
         String query = sharedPrefs.getString(
                 getString(R.string.settings_query_key),
                 getString(R.string.settings_query_default)
-                );
+        );
 
         String tag = sharedPrefs.getString(
                 getString(R.string.settings_order_by_key),
                 getString(R.string.settings_order_by_default)
-                 );
+        );
 
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
@@ -173,6 +174,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
         Log.i(LOG_TAG, "onLoaderReset");
         mAdapter.clear();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -189,5 +191,5 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
         }
         return super.onOptionsItemSelected(item);
     }
-}
 
+}

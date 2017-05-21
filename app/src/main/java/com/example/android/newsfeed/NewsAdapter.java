@@ -1,10 +1,12 @@
 package com.example.android.newsfeed;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -39,41 +41,75 @@ public class NewsAdapter extends ArrayAdapter<SingleNews> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Check if the existing view is being reused, otherwise inflate the view
-        View listItemView = convertView;
-        if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
+        ViewHolder viewHolder;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.list_item, parent, false);
+
+            viewHolder = new ViewHolder(convertView);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.thumbnail);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        // Get the {@link Word} object located at this position in the list
+        // Get the {@link News} object located at this position in the list
         SingleNews currentNews = getItem(position);
+
+
+        viewHolder.imageURL = currentNews.getThumbnail();
+
+        new DownloadAsyncTask().execute(viewHolder);
+
         // Find the TextView in the list_item.xml layout with the ID version_name
-        TextView titleTextView = (TextView) listItemView.findViewById(R.id.headline);
-        // Get the version name from the current Word object and
+        // Get the version name from the current News object and
         // set this text on the name TextView
-        titleTextView.setText(currentNews.getTitle());
+        viewHolder.titleTextView.setText(currentNews.getTitle());
 
         // Find the TextView in the list_item.xml layout with the ID version_number
-        TextView shortTextView = (TextView) listItemView.findViewById(R.id.shorttext);
-        // Get the version number from the current Word object and
+        // Get the version number from the current News object and
         // set this text on the number TextView
-        shortTextView.setText(currentNews.getShorttext());
+        viewHolder.shortTextView.setText(currentNews.getShorttext());
 
         // Find the TextView with view ID date
-        TextView dateView = (TextView) listItemView.findViewById(date);
+//        TextView dateView = (TextView) listItemView.findViewById(date);
         // Format the date string (i.e. "2017-03-27")
         String formattedDate = (currentNews.getDateTime()).substring(0,10);
         // Display the date of the current news in that TextView
-        dateView.setText(formattedDate);
+        viewHolder.dateView.setText(formattedDate);
 
         // Find the TextView in the list_item.xml layout with the ID version_number
-        TextView typeTextView = (TextView) listItemView.findViewById(R.id.SectionName);
-        // Get the version number from the current Word object and
+//        TextView typeTextView = (TextView) listItemView.findViewById(R.id.SectionName);
+        // Get the version number from the current News object and
         // set this text on the number TextView
-        typeTextView.setText(currentNews.getSectionName());
+        viewHolder.typeTextView.setText(currentNews.getSectionName());
 
         // Return the whole list item layout (containing 3 TextViews)
         // so that it can be shown in the ListView
-        return listItemView;
+        return convertView;
+    }
+
+    class ViewHolder {
+        public String imageURL;
+        public ImageView imageView;
+        private TextView titleTextView;
+        private TextView shortTextView;
+        private TextView dateView;
+        private TextView typeTextView;
+
+
+        public ViewHolder(@NonNull View view) {
+            this.imageView = (ImageView) view
+                    .findViewById(R.id.thumbnail);
+            this.titleTextView = (TextView) view
+                    .findViewById(R.id.headline);
+            this.shortTextView = (TextView) view
+                    .findViewById(R.id.shorttext);
+            this.dateView = (TextView) view
+                    .findViewById(date);
+            this.typeTextView = (TextView) view
+                    .findViewById(R.id.SectionName);
+
+        }
     }
 }

@@ -12,9 +12,9 @@
 
     <ImageView
         android:id="@+id/thumbnail"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:gravity="center"
+        android:layout_width="120dp"
+        android:layout_height="88dp"
+        android:layout_gravity="center_vertical"
         android:src="@drawable/sample_image01" />
 
     <LinearLayout
@@ -70,11 +70,12 @@
 
         <TextView
             android:id="@+id/SectionName"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:maxLines="2"
             android:textColor="@color/textColortrailText"
-            android:textSize="10sp"
+            android:textSize="12sp"
             tools:text="xxxxxxxxx" />
 
         </LinearLayout>

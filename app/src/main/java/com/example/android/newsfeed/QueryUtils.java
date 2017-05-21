@@ -167,8 +167,9 @@ public final class QueryUtils {
                 String title = fields.getString("headline");
                 String shorttext = fields.getString("trailText");
                 String datetime = fields.getString("lastModified");
+                String thumbnail = fields.getString("thumbnail");
 
-                singleNews.add(new SingleNews(title, shorttext, datetime, sectionname, url));
+                singleNews.add(new SingleNews(title, shorttext, datetime, sectionname, url, thumbnail));
             }
 
         } catch (JSONException e) {

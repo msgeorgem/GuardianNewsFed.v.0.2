@@ -6,7 +6,7 @@ package com.example.android.newsfeed;
 
 public class SingleNews {
 
-//    private String mThumbnail;
+    private String mThumbnail;
     private String mTitle;
     private String mShorttext;
     private String mDateTime;
@@ -21,8 +21,9 @@ public class SingleNews {
      * @param url       is the url of the website about specific news
      */
 
-    public SingleNews(String title, String shorttext, String dateTime, String sectionname, String url) {
-//        mThumbnail = thumbnail;
+    public SingleNews(String title, String shorttext, String dateTime, String sectionname,
+                      String url, String thumbnail) {
+        mThumbnail = thumbnail;
         mTitle = title;
         mShorttext = shorttext;
         mDateTime = dateTime;
@@ -71,4 +72,7 @@ public class SingleNews {
     }
 
 
+    public String getThumbnail() {
+        return mThumbnail;
+    }
 }
