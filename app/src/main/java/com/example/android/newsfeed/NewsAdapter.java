@@ -56,7 +56,6 @@ public class NewsAdapter extends ArrayAdapter<SingleNews> {
         // Get the {@link News} object located at this position in the list
         SingleNews currentNews = getItem(position);
 
-
         viewHolder.imageURL = currentNews.getThumbnail();
 
         new DownloadAsyncTask().execute(viewHolder);
