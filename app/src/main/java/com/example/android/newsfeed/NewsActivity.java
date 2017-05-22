@@ -51,7 +51,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
             "https://content.guardianapis.com/search?" +
                     "&show-fields=headline,thumbnail,trailText,short-url,lastModified" +
                     "&show-tags=type";
-    public ListView newsListView;
+    private ListView newsListView;
     /**
      * Adapter for the list of news
      */

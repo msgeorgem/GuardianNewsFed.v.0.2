@@ -6,7 +6,7 @@ package com.example.android.newsfeed;
 
 public class SingleNews {
 
-    private String mThumbnail;
+    private final String mThumbnail;
     private String mTitle;
     private String mShorttext;
     private String mDateTime;
