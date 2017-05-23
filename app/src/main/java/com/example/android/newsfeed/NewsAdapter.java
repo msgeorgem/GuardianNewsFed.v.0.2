@@ -18,7 +18,7 @@ import static com.example.android.newsfeed.R.id.date;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private static ClickListener clickListener;
-    public RecyclerView mRecyclerView;
+
     private ArrayList<SingleNews> mArrayAdapter;
 
     public NewsAdapter(ArrayList<SingleNews> listNews) {
@@ -38,7 +38,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return (mArrayAdapter == null) ? 0 : mArrayAdapter.size();
+        return mArrayAdapter.size();
     }
 
     // binds the data to the textview in each cell

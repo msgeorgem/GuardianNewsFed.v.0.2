@@ -56,7 +56,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
      * Adapter for the list of news
      */
     public NewsAdapter mAdapter;
-    public ArrayList<SingleNews> mArrayList;
+    private ArrayList<SingleNews> newsList = new ArrayList<>();
     /**
      * TextView that is displayed when the list is empty
      */
@@ -71,34 +71,36 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
 
         // Setting up the RecyclerView
         newsRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        assert newsRecyclerView != null;
+        //assert newsRecyclerView != null;
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Create a new adapter that takes an empty list of earthquakes as input
+        mAdapter = new NewsAdapter(newsList);
+
         // Standard RecyclerView implementation
-        mAdapter = new NewsAdapter(mArrayList);
         newsRecyclerView.setAdapter(mAdapter);
 
 
-//        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
 //        newsRecyclerView.setItemAnimator(mEmptyStateTextView);
 //        newsRecyclerView.setItemAnimator();
 
-        mAdapter.setOnItemClickListener(new NewsAdapter.ClickListener() {
-            @Override
-            public void onItemClick(int position, View view) {
+        // mAdapter.setOnItemClickListener(new NewsAdapter.ClickListener() {
+        //    @Override
+        //     public void onItemClick(int position, View view) {
 
-//                position = newsRecyclerView.indexOfChild(view);
+
                 // Get the {@link News} object at the given position the user clicked on
-                SingleNews singleNews = mArrayList.get(position);
+        // SingleNews singleNews = mAdapter(position);
                 //Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri newsUri = Uri.parse(singleNews.getUrl());
+        //Uri newsUri = Uri.parse(singleNews.getUrl());
                 //Create a new intent to view the news URI
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, newsUri);
+        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, newsUri);
                 //Send the intent to launch a new activity
-                startActivity(browserIntent);
-            }
+        //startActivity(browserIntent);
+        // }
 
-        });
+        // });
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager cm = (ConnectivityManager)
@@ -159,17 +161,18 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
     public void onLoadFinished(Loader<ArrayList<SingleNews>> loader, ArrayList<SingleNews> news) {
         // Hide loading indicator because the data has been loaded
         Log.i(LOG_TAG, "onLoadFinished");
-        //View loadingIndicator = findViewById(R.id.loading_indicator);
-        //loadingIndicator.setVisibility(View.GONE);
+        View loadingIndicator = findViewById(R.id.loading_indicator);
+        loadingIndicator.setVisibility(View.GONE);
         // Set empty state text to display "No internet connection"
-//        mEmptyStateTextView.setText(R.string.no_news);
-
-        mArrayList.clear();
+        mEmptyStateTextView.setText(R.string.no_news);
+        //newsRecyclerView.setAdapter(null);
+        newsList.clear();
 
         // If there is a valid list of {@link News}s, then add them to the mArrayList's
         // data set. This will trigger the ListView to update.
         if (news != null && !news.isEmpty()) {
-            mArrayList.addAll(news);
+            newsList.addAll(news);
+
         }
     }
 
@@ -177,7 +180,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
     public void onLoaderReset(Loader<ArrayList<SingleNews>> loader) {
         // Loader reset, so we can clear out our existing data.
         Log.i(LOG_TAG, "onLoaderReset");
-        mArrayList.clear();
+        newsList.clear();
     }
 
     @Override
