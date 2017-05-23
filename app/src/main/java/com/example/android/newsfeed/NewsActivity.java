@@ -27,12 +27,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -51,11 +51,12 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
             "https://content.guardianapis.com/search?" +
                     "&show-fields=headline,thumbnail,trailText,short-url,lastModified" +
                     "&show-tags=type";
-    private ListView newsListView;
+    public RecyclerView newsRecyclerView;
     /**
      * Adapter for the list of news
      */
-    private NewsAdapter mAdapter;
+    public NewsAdapter mAdapter;
+    public ArrayList<SingleNews> mArrayList;
     /**
      * TextView that is displayed when the list is empty
      */
@@ -68,24 +69,27 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
 
         Log.i(LOG_TAG, "initLoader");
 
-        // Find a reference to the {@link ListView} in the layout
-        newsListView = (ListView) findViewById(R.id.list);
+        // Setting up the RecyclerView
+        newsRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        assert newsRecyclerView != null;
+        newsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Create a new adapter that takes an empty list of earthquakes as input
-        mAdapter = new NewsAdapter(this, new ArrayList<SingleNews>());
+        // Standard RecyclerView implementation
+        mAdapter = new NewsAdapter(mArrayList);
+        newsRecyclerView.setAdapter(mAdapter);
 
-        // Set the adapter on the {@link ListView}
-        // so the list can be populated in the user interface
-        newsListView.setAdapter(mAdapter);
 
-        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
-        newsListView.setEmptyView(mEmptyStateTextView);
+//        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+//        newsRecyclerView.setItemAnimator(mEmptyStateTextView);
+//        newsRecyclerView.setItemAnimator();
 
-        newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new NewsAdapter.ClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // Get the {@link Earthquake} object at the given position the user clicked on
-                SingleNews singleNews = mAdapter.getItem(position);
+            public void onItemClick(int position, View view) {
+
+//                position = newsRecyclerView.indexOfChild(view);
+                // Get the {@link News} object at the given position the user clicked on
+                SingleNews singleNews = mArrayList.get(position);
                 //Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri newsUri = Uri.parse(singleNews.getUrl());
                 //Create a new intent to view the news URI
@@ -93,7 +97,9 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
                 //Send the intent to launch a new activity
                 startActivity(browserIntent);
             }
+
         });
+
         // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager cm = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -117,7 +123,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
             // Set empty state text to display "No internet connection"
             mEmptyStateTextView.setText(R.string.no_internet);
         }
-
 
     }
 
@@ -154,17 +159,17 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
     public void onLoadFinished(Loader<ArrayList<SingleNews>> loader, ArrayList<SingleNews> news) {
         // Hide loading indicator because the data has been loaded
         Log.i(LOG_TAG, "onLoadFinished");
-        View loadingIndicator = findViewById(R.id.loading_indicator);
-        loadingIndicator.setVisibility(View.GONE);
+        //View loadingIndicator = findViewById(R.id.loading_indicator);
+        //loadingIndicator.setVisibility(View.GONE);
         // Set empty state text to display "No internet connection"
-        mEmptyStateTextView.setText(R.string.no_news);
+//        mEmptyStateTextView.setText(R.string.no_news);
 
-        mAdapter.clear();
+        mArrayList.clear();
 
-        // If there is a valid list of {@link News}s, then add them to the adapter's
+        // If there is a valid list of {@link News}s, then add them to the mArrayList's
         // data set. This will trigger the ListView to update.
         if (news != null && !news.isEmpty()) {
-            mAdapter.addAll(news);
+            mArrayList.addAll(news);
         }
     }
 
@@ -172,7 +177,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<A
     public void onLoaderReset(Loader<ArrayList<SingleNews>> loader) {
         // Loader reset, so we can clear out our existing data.
         Log.i(LOG_TAG, "onLoaderReset");
-        mAdapter.clear();
+        mArrayList.clear();
     }
 
     @Override
